@@ -17,7 +17,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <junit-jupiter.version>5.6.0</junit-jupiter.version>
     </properties>
     <repositories>
@@ -122,53 +122,114 @@
                     <user>root</user>
                     <password>123456</password>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>start-test-database</id>
+                        <id>test-database-setup</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>migrate</goal>
                         </goals>
                         <configuration>
-                            <longModulepath>false</longModulepath>
-                            <executable>docker</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>--name</argument>
-                                <argument>test-mysql</argument>
-                                <argument>-e</argument>
-                                <argument>MYSQL_ROOT_PASSWORD=123456</argument>
-                                <argument>-e</argument>
-                                <argument>MYSQL_DATABASE=springboot</argument>
-                                <argument>-p</argument>
-                                <argument>3307:3306</argument>
-                                <argument>-d</argument>
-                                <argument>mysql</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>teardown-test-database</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-<!--                            <longModulepath>false</longModulepath>-->
-                            <executable>docker</executable>
-                            <arguments>
-                                <argument>rm</argument>
-                                <argument>-f</argument>
-                                <argument>test-mysql</argument>
-                            </arguments>
+                            <url>jdbc:mysql://localhost:3307/springboot</url>
+                            <user>root</user>
+                            <password>123456</password>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>exec-maven-plugin</artifactId>-->
+<!--                <version>1.6.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>start-test-database</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <longModulepath>false</longModulepath>-->
+<!--                            <executable>docker</executable>-->
+<!--                            <arguments>-->
+<!--                                <argument>run</argument>-->
+<!--                                <argument>&#45;&#45;name</argument>-->
+<!--                                <argument>test-mysql</argument>-->
+<!--                                <argument>-e</argument>-->
+<!--                                <argument>MYSQL_ROOT_PASSWORD=123456</argument>-->
+<!--                                <argument>-e</argument>-->
+<!--                                <argument>MYSQL_DATABASE=springboot</argument>-->
+<!--                                <argument>-p</argument>-->
+<!--                                <argument>3307:3306</argument>-->
+<!--                                <argument>-d</argument>-->
+<!--                                <argument>mysql</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>wait-test-database</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <longModulepath>false</longModulepath>-->
+<!--                            <executable></executable>-->
+<!--                            <arguments>-->
+<!--                                <argument></argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>teardown-test-database</id>-->
+<!--                        <phase>post-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            &lt;!&ndash;                            <longModulepath>false</longModulepath>&ndash;&gt;-->
+<!--                            <executable>docker</executable>-->
+<!--                            <arguments>-->
+<!--                                <argument>rm</argument>-->
+<!--                                <argument>-f</argument>-->
+<!--                                <argument>test-mysql</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.1</version>
+                <configuration>
+                    <includes>
+                        <include>**/*IntegrationTest</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>6.1.1</version>
+                <configuration>
+                    <url>jdbc:mysql://localhost:3306/springboot</url>
+                    <user>root</user>
+                    <password>123456</password>
+                </configuration>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>test-database-setup</id>-->
+<!--                        <phase>pre-integration-test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>migrate</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <url>jdbc:mysql://localhost:3307/springboot?useSSL=false&amp;allowPublicKeyRetrieval=true</url>-->
+<!--                            <user>root</user>-->
+<!--                            <password>123456</password>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
         </plugins>
     </build>
