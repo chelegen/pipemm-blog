@@ -1,6 +1,5 @@
 language: java
+dist: xenial
 
 jdk:
-  - Openjdk8
-
-script: mvn verify
+  - openjdk8
