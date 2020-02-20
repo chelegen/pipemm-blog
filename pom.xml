@@ -113,30 +113,6 @@
                     </includes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>6.1.1</version>
-                <configuration>
-                    <url>jdbc:mysql://localhost:3306/springboot</url>
-                    <user>root</user>
-                    <password>123456</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>test-database-setup</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                        <configuration>
-                            <url>jdbc:mysql://localhost:3307/springboot</url>
-                            <user>root</user>
-                            <password>123456</password>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.codehaus.mojo</groupId>-->
 <!--                <artifactId>exec-maven-plugin</artifactId>-->
