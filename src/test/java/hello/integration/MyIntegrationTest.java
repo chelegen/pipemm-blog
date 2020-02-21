@@ -1,3 +1,5 @@
+package hello.integration;
+
 import org.junit.jupiter.api.Test;
 
 //package hello.integration;

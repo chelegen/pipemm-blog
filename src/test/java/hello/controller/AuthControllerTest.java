@@ -52,7 +52,7 @@ class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse()
                         .getContentAsString()
-                        .contains("User not logged in")));
+                        .contains("用户没有登陆")));
 
         // 2. 使用/auth/login登录
         Map<String, String> user = new HashMap<>();
@@ -65,7 +65,7 @@ class AuthControllerTest {
         MvcResult result = mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isOk())
-                .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse().getContentAsString().contains("Landed successfully")))
+                .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse().getContentAsString().contains("登陆成功")))
                 .andReturn();
 
         // 3. 检查/auth的返回值，处于登录状态
