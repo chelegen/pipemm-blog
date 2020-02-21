@@ -9,15 +9,15 @@ public class LoginResult extends Result<User> {
     }
 
     public static Result success(String msg, boolean isLogin) {
-        return success(msg, isLogin, null);
+        return new LoginResult(ResultStatus.OK, msg, null, isLogin);
+    }
+
+    public static Result success(User user) {
+        return success(null, user);
     }
 
     public static Result success(String msg, User user) {
-        return success(msg, true, user);
-    }
-
-    public static Result success(String msg, boolean isLogin, User user) {
-        return new LoginResult(ResultStatus.OK, msg, user, isLogin);
+        return new LoginResult(ResultStatus.OK, msg, user, true);
     }
 
     public static Result failure(String message) {

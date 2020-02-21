@@ -18,7 +18,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
-        this.avatar = "";
+        this.avatar = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1651318081,2860235060&fm=26&gp=0.jpg";
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
