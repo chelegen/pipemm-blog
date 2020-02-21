@@ -1,4 +1,4 @@
-package hello.mapper;
+package hello.dao;
 
 import hello.entity.User;
 import org.apache.ibatis.annotations.Insert;
@@ -14,5 +14,8 @@ public interface UserMapper {
     @Insert("insert into user(username,encrypted_password,created_at,updated_at) " +
             "values(#{username},#{encryptedPassword},now(),now())")
     void save(@Param("username") String username, @Param("encryptedPassword") String encryptedPassword);
+
+    @Select("select * from user where id = #{id}")
+    User findUserById(@Param("id") Integer id);
 }
 
