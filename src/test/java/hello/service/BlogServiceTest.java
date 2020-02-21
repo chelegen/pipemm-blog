@@ -1,6 +1,7 @@
 package hello.service;
 
 import hello.dao.BlogDao;
+import hello.entity.Blog;
 import hello.entity.BlogResult;
 import hello.entity.Result;
 import hello.entity.User;
@@ -36,10 +37,31 @@ public class BlogServiceTest {
     }
 
     @Test
-    public void returnFailureWhenBlogUserIdNotMatch() {
+    public void returnFailureWhenBlogNotFound() {
         when(blogDao.getBlogById(1)).thenReturn(null);
 
-        BlogResult result = blogService.deleteBlog(1, mock(User.class));
+        BlogResult result = blogService.deleteBlog(mock(User.class), 1);
 
+        Assertions.assertEquals("fail", result.getStatus());
+        Assertions.assertEquals("博客不存在", result.getStatus());
+    }
+
+    @Test
+    public void returnFailureWhenBlogUserIdNotMatch() {
+        User blogAuthor = new User(123, "blogAuthor", "");
+        User operator = new User(456, "operator", "");
+
+        Blog targetBlog = new Blog();
+        targetBlog.setId(1);
+        targetBlog.setUser(operator);
+
+        Blog blogInDb = new Blog();
+        blogInDb.setUser(blogAuthor);
+
+        when(blogDao.getBlogById(1)).thenReturn(blogInDb);
+        BlogResult result = blogService.updateBlog(1, targetBlog);
+
+        Assertions.assertEquals("fail", result.getStatus());
+        Assertions.assertEquals("无法修改别人的博客", result.getMsg());
     }
 }
