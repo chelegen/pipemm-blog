@@ -24,9 +24,9 @@ import java.util.Map;
 
 @Controller
 public class AuthController {
-    private UserService userService;
-    private AuthenticationManager authenticationManager;
-    private AuthService authService;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
     @Inject
     public AuthController(UserService userService, AuthenticationManager authenticationManager, AuthService authService) {
