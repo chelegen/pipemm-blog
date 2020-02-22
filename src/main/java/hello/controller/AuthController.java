@@ -68,6 +68,12 @@ public class AuthController {
         } catch (DuplicateKeyException e) {
             return LoginResult.failure("用户已经存在");
         }
+        UserDetails userDetails;
+        userDetails = userService.loadUserByUsername(username);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        authenticationManager.authenticate(token);
+        SecurityContextHolder.getContext().setAuthentication(token);
+
         return LoginResult.success("注册成功", userService.getUserByUsername(username));
     }
 

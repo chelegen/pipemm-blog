@@ -18,10 +18,6 @@ import javax.inject.Inject;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Inject
     private UserService userService;
-//    @Inject
-//    public WebSecurityConfig(UserService userService) {
-//        this.userService = userService;
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
