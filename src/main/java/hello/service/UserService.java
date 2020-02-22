@@ -13,14 +13,10 @@ import java.util.Collections;
 
 @Service
 public class UserService implements UserDetailsService {
-    private BCryptPasswordEncoder bCryptPasswordEncoder;    // 加密器
-    private UserMapper userMapper;
-
     @Inject
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserMapper userMapper) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userMapper = userMapper;
-    }
+    private BCryptPasswordEncoder bCryptPasswordEncoder;    // 加密器
+    @Inject
+    private UserMapper userMapper;
 
     public void save(String username, String password) {
         userMapper.save(username, bCryptPasswordEncoder.encode(password));
@@ -40,7 +36,4 @@ public class UserService implements UserDetailsService {
                 username, user.getEncryptedPassword(), Collections.emptyList());
     }
 
-    public User getUserById(Integer userId) {
-        return userMapper.findUserById(userId);
-    }
 }

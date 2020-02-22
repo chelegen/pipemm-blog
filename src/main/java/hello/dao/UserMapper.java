@@ -15,7 +15,5 @@ public interface UserMapper {
             "values(#{username},#{encryptedPassword},now(),now())")
     void save(@Param("username") String username, @Param("encryptedPassword") String encryptedPassword);
 
-    @Select("select * from user where id = #{id}")
-    User findUserById(@Param("id") Integer id);
 }
 
