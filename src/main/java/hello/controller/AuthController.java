@@ -2,14 +2,12 @@ package hello.controller;
 
 import hello.entity.LoginResult;
 import hello.entity.Result;
-import hello.entity.User;
 import hello.service.AuthService;
 import hello.service.UserService;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

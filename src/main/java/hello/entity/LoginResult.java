@@ -24,7 +24,7 @@ public class LoginResult extends Result<User> {
         return new LoginResult(ResultStatus.FAIL, message, null, false);
     }
 
-    public boolean isLogin() {
+    public boolean getIsLogin() {
         return isLogin;
     }
 }
