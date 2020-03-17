@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.Map;
 
 @Controller
@@ -38,7 +39,7 @@ public class AuthController {
     public Result auth() {
         return authService.getCurrentUser()
                 .map(LoginResult::success)
-                .orElse(LoginResult.success("用户没有登陆", false));
+                .orElse(LoginResult.success("用户没有登录", false));
     }
 
     @GetMapping("/auth/logout")
@@ -46,7 +47,7 @@ public class AuthController {
     public Result logout() {
         return authService.getCurrentUser()
                 .map(user -> LoginResult.success("注销成功", false))
-                .orElse(LoginResult.success("用户没有登陆", false));
+                .orElse(LoginResult.success("用户没有登录", false));
 
     }
 
@@ -66,12 +67,12 @@ public class AuthController {
         } catch (DuplicateKeyException e) {
             return LoginResult.failure("用户已经存在");
         }
-        UserDetails userDetails;
-        userDetails = userService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+//        UserDetails userDetails;
+//        userDetails = userService.loadUserByUsername(username);
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
         authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(token);
-
         return LoginResult.success("注册成功", userService.getUserByUsername(username));
     }
 
@@ -80,21 +81,24 @@ public class AuthController {
     public Result login(@RequestBody Map<String, String> usernameAndPasswordJson) {
         String username = usernameAndPasswordJson.get("username");
         String password = usernameAndPasswordJson.get("password");
-        UserDetails userDetails;
-        try {
-            userDetails = userService.loadUserByUsername(username);
-        } catch (UsernameNotFoundException e) {
-            return LoginResult.failure("用户不存在");
-        }
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+//        UserDetails userDetails;
+//        try {
+//            userDetails = userService.loadUserByUsername(username);
+//        } catch (UsernameNotFoundException e) {
+//            return LoginResult.failure("用户不存在");
+//        }
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
 
         try {
             authenticationManager.authenticate(token);
             // 把用户信息（Cookie）保存在一个地方
             SecurityContextHolder.getContext().setAuthentication(token);
-            return LoginResult.success("登陆成功", userService.getUserByUsername(username));
+            return LoginResult.success("登录成功", userService.getUserByUsername(username));
+        } catch (UsernameNotFoundException e) {
+            return LoginResult.failure("用户不存在");
         } catch (BadCredentialsException e) {
-            return LoginResult.failure("密码错误");
+            return LoginResult.failure("密码不正确");
         }
     }
 }
