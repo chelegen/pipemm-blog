@@ -4425,7 +4425,7 @@
 
 .el-message-box {
     display: inline-block;
-    width: 420px;
+    width: 380px;
     padding-bottom: 10px;
     vertical-align: middle;
     background-color: #fff;
@@ -15566,7 +15566,7 @@
 }
 
 #header header[data-v-161d018a] {
-    background-image: url(../img/background-image.png);
+    background-image: url(../img/bg-clouds.77eb329a.png);
     background-repeat: repeat-x;
     background-position: 0 0;
     color: #fff
@@ -15831,7 +15831,7 @@ a:hover {
 }
 
 #app, #app #main {
-    background: #f7f7f7
+    background: #c1dfee
 }
 
 #app #main {
@@ -15842,5 +15842,5 @@ a:hover {
 
 #app #footer {
     min-height: 5em;
-    background: #d7d7d7
+    background: #c1dfee
 }
