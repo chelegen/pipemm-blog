@@ -64,7 +64,7 @@ public class UserRegisterTest {
             Assertions.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
             String response = EntityUtils.toString(httpResponse.getEntity());
 
-            Assertions.assertTrue(response.contains("登陆成功"));
+            Assertions.assertTrue(response.contains("登录成功"));
             return null;
         });
 

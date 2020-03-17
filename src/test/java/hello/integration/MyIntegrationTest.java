@@ -52,7 +52,7 @@ public class MyIntegrationTest {
         Assertions.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
         String response = EntityUtils.toString(httpResponse.getEntity());
         System.out.println(response);
-        Assertions.assertTrue(response.contains("用户没有登陆"));
+        Assertions.assertTrue(response.contains("用户没有登录"));
     }
 
     @Test
