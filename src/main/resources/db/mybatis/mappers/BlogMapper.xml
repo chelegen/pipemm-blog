@@ -19,10 +19,10 @@
         FROM blog
         LEFT OUTER JOIN user
         ON blog.user_id = user.id
-        ORDER BY blog_updated_at desc
         <if test="user_id != null">
             WHERE blog.user_id = #{user_id}
         </if>
+        ORDER BY blog_updated_at desc
         limit ${offset}, #{limit}
     </select>
     <select id="countBlogs" resultType="int">
