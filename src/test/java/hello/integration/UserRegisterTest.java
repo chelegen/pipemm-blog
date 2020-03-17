@@ -1,8 +1,10 @@
 package hello.integration;
 
 import hello.Application;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -21,11 +23,10 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
-public class MyIntegrationTest {
+public class UserRegisterTest {
     @Inject
     Environment environment;
 
@@ -44,18 +45,28 @@ public class MyIntegrationTest {
     }
 
     @Test
-    public void indexHtmlAccessible() throws IOException {
+    public void canRegisterNewUser() throws IOException {
         String port = environment.getProperty("local.server.port");
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet get = new HttpGet("http://localhost:" + port + "/auth");
-        CloseableHttpResponse httpResponse = httpClient.execute(get);
-        Assertions.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
-        String response = EntityUtils.toString(httpResponse.getEntity());
-        System.out.println(response);
-        Assertions.assertTrue(response.contains("用户没有登陆"));
-    }
+        HttpPost post = new HttpPost("http://localhost:" + port + "/auth/register");
+        post.setEntity(new StringEntity("{\"username\":\"aaa\",\"password\":\"bbb\"}", ContentType.APPLICATION_JSON));
+        httpClient.execute(post, (ResponseHandler<String>) httpResponse -> {
+            Assertions.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+            String response = EntityUtils.toString(httpResponse.getEntity());
 
-    @Test
-    public void test() {
+            Assertions.assertTrue(response.contains("注册成功"));
+            return null;
+        });
+
+        post = new HttpPost("http://localhost:" + port + "/auth/login");
+        post.setEntity(new StringEntity("{\"username\":\"aaa\",\"password\":\"bbb\"}", ContentType.APPLICATION_JSON));
+        httpClient.execute(post, (ResponseHandler<String>) httpResponse -> {
+            Assertions.assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+            String response = EntityUtils.toString(httpResponse.getEntity());
+
+            Assertions.assertTrue(response.contains("登陆成功"));
+            return null;
+        });
+
     }
 }

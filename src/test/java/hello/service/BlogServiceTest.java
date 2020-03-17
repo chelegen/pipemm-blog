@@ -43,7 +43,7 @@ public class BlogServiceTest {
         BlogResult result = blogService.deleteBlog(mock(User.class), 1);
 
         Assertions.assertEquals("fail", result.getStatus());
-        Assertions.assertEquals("博客不存在", result.getStatus());
+        Assertions.assertEquals("博客不存在", result.getMsg());
     }
 
     @Test
