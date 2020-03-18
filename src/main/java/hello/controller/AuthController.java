@@ -5,6 +5,7 @@ import hello.entity.Result;
 import hello.service.AuthService;
 import hello.service.UserService;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -67,9 +68,7 @@ public class AuthController {
         } catch (DuplicateKeyException e) {
             return LoginResult.failure("用户已经存在");
         }
-//        UserDetails userDetails;
-//        userDetails = userService.loadUserByUsername(username);
-//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
         authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(token);
@@ -88,6 +87,11 @@ public class AuthController {
 //            return LoginResult.failure("用户不存在");
 //        }
 //        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+
+    /*  Spring Security 是使用org.springframework.security.core.userdetails.User类作为用户登录凭据( Principal )的。
+        在 authenticate 方法内部，会通过传进来的 principal 得到用户名，principal 可以是很多类型，最终都是获取 username。
+        随后会去调用 loadUserByUsername
+        如果用户不存在 会抛出 UsernameNotFoundException ,通过一个属性控制 hideUserNotFoundExceptions ，是否转成 BadCredentialsException    */
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
 
         try {
