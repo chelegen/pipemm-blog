@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ class AuthControllerTest {
     @Test
     void returnNotLoginByDefault() throws Exception {
         mvc.perform(get("/auth")).andExpect(status().isOk())
-                .andExpect(result -> Assertions.assertTrue(result.getResponse().getContentAsString().contains("用户没有登录")));
+                .andExpect(result -> Assertions.assertTrue(result.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("用户没有登录")));
     }
 
     @Test
