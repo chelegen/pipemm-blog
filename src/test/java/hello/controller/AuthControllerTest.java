@@ -1,7 +1,6 @@
 package hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hello.entity.User;
 import hello.service.AuthService;
 import hello.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -19,9 +18,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpSession;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,9 +57,9 @@ class AuthControllerTest {
         // 1. 未登录时，/auth接口返回未登录状态
         mvc.perform(get("/auth"))
                 .andExpect(status().isOk())
-                .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse().getContentAsString().contains("用户没有登录")));
+                .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("用户没有登录")));
 
-/*        // 2. 使用/auth/login登录
+        // 2. 使用/auth/login登录
         Map<String, String> user = new HashMap<>();
         user.put("username", "MyUser");
         user.put("password", "MyPassword");
@@ -71,7 +70,7 @@ class AuthControllerTest {
         MvcResult result = mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isOk())
-                .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse().getContentAsString().contains("登录成功")))
+                .andExpect(mvcResult -> Assertions.assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("登录成功")))
                 .andReturn();
 
         // 3. 检查/auth的返回值，处于登录状态
@@ -80,7 +79,7 @@ class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(mvcResult -> {
                     System.out.println(mvcResult.getResponse().getContentAsString());
-                    Assertions.assertTrue(mvcResult.getResponse().getContentAsString().contains("MyUser"));
-                });*/
+                    Assertions.assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("MyUser"));
+                });
     }
 }
