@@ -8,6 +8,7 @@ import hello.entity.User;
 import hello.service.AuthService;
 import hello.service.BlogService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,9 +44,10 @@ public class BlogController {
 
     @PostMapping("/blog")
     @ResponseBody
-    public Result newBlog(@RequestBody Map<String, String> params) {
+    public Result newBlog(@RequestBody  Map<String, String> params) {
         try {
-            return authService.getCurrentUser().map(user -> blogService.insertBlog(fromParam(params, user)))
+            return authService.getCurrentUser()
+                    .map(user -> blogService.insertBlog(fromParam(params, user)))
                     .orElse(BlogResult.failure("登录后才能操作"));
         } catch (IllegalArgumentException e) {
             return BlogResult.failure(e.getMessage());
@@ -54,8 +56,8 @@ public class BlogController {
 
     @PatchMapping("/blog/{blogId}")
     @ResponseBody
-    public Result updateBlog(@PathVariable("blogId") int blogId,
-                             @RequestBody Map<String, String> params) {
+    public Result updateBlog(@PathVariable int blogId,
+                             @RequestBody(required = false) Map<String, String> params) {
         try {
             return authService.getCurrentUser()
                     .map(user -> blogService.updateBlog(blogId, (fromParam(params, user))))
