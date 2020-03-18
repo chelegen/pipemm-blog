@@ -35,9 +35,9 @@ public class BlogService {
         }
     }
 
-    public BlogResult getBlogById(int blodId) {
+    public BlogResult getBlogById(int blogId) {
         try {
-            return BlogResult.success("获取成功", blogDao.getBlogById(blodId));
+            return BlogResult.success("获取成功", blogDao.getBlogById(blogId));
         } catch (Exception e) {
             return BlogResult.failure(e.getMessage());
         }
