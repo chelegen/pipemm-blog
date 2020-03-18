@@ -9,6 +9,7 @@
         blog.title as blog_title,
         blog.description as blog_description,
         blog.content as blog_conent,
+        blog.at_index as blog_at_index,
         blog.updated_at as blog_updated_at,
         blog.created_at as blog_created_at,
         user.id as user_id,
@@ -19,9 +20,11 @@
         FROM blog
         LEFT OUTER JOIN user
         ON blog.user_id = user.id
+        WHERE
         <if test="user_id != null">
-            WHERE blog.user_id = #{user_id}
+            blog.user_id = #{user_id} and
         </if>
+        blog.at_index=#{atIndex}
         ORDER BY blog_updated_at desc
         limit ${offset}, #{limit}
     </select>
@@ -50,8 +53,8 @@
 
     </select>
     <insert id="insertBlog" parameterType="hello.entity.Blog" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO blog (user_id, title, description, content, created_at, updated_at)
-        VALUES (#{userId}, #{title}, #{description}, #{content}, now(), now())
+        INSERT INTO blog (user_id, title, description, content,at_index, created_at, updated_at)
+        VALUES (#{userId}, #{title}, #{description}, #{content},#{atIndex}, now(), now())
     </insert>
     <delete id="deleteBlog" parameterType="int">
         DELETE
@@ -63,7 +66,8 @@
         SET title       = #{title},
             content     = #{content},
             description = #{description},
-            updated_at  = now()
+            updated_at  = now(),
+            at_index = #{atIndex}
         WHERE id = #{id}
     </update>
 
@@ -72,6 +76,7 @@
         <result property="title" column="blog_title"/>
         <result property="description" column="blog_description"/>
         <result property="content" column="blog_content"/>
+        <result property="atIndex" column="blog_at_index"/>
         <result property="updatedAt" column="blog_updated_at"/>
         <result property="createdAt" column="blog_created_at"/>
         <association property="user" javaType="hello.entity.User">

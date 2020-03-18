@@ -19,9 +19,9 @@ public class BlogService {
         this.userService = userServicel;
     }
 
-    public BlogListResult getBlogs(Integer page, Integer pageSize, Integer userId) {
+    public BlogListResult getBlogs(Integer page, Integer pageSize, Integer userId, boolean atIndex) {
         try {
-            List<Blog> blogs = blogDao.getBlogs(page, pageSize, userId);
+            List<Blog> blogs = blogDao.getBlogs(page, pageSize, userId, atIndex);
 
 //            blogs.forEach(blog -> blog.setUser(userService.getUserById(blog.getUserId())));
 

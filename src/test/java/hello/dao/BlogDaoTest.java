@@ -27,11 +27,12 @@ class BlogDaoTest {
         // user_id = 1
         // offset = 10
         // limit = 10
-        blogDao.getBlogs(2, 10, 1);
+        blogDao.getBlogs(2, 10, 1,true);
         Map<String, Object> expectedParam = new HashMap<>();
         expectedParam.put("user_id", 1);
         expectedParam.put("offset", 10);
         expectedParam.put("limit", 10);
+        expectedParam.put("atIndex", true);
         Mockito.verify(mockSession).selectList("selectBlog", expectedParam);
 
     }

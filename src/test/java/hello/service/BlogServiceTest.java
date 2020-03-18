@@ -23,17 +23,14 @@ public class BlogServiceTest {
 
     @Test
     public void getBlogsFromDb() {
-        blogService.getBlogs(1, 10, null);
-        verify(blogDao).getBlogs(1, 10, null);
+        blogService.getBlogs(1, 10, null, true);
+        verify(blogDao).getBlogs(1, 10, null, true);
     }
 
     @Test
-    public void returnFailureWhenExceptionThrown() {
-        when(blogDao.getBlogs(anyInt(), anyInt(), any())).thenThrow(new RuntimeException());
-        Result result = blogService.getBlogs(1, 10, null);
-
-        Assertions.assertEquals("fail", result.getStatus());
-        Assertions.assertEquals("系统异常", result.getMsg());
+    public void returnOkWhenGetAtIndexBlogs() {
+        Result result = blogService.getBlogs(1, 10, null, true);
+        Assertions.assertEquals("ok", result.getStatus());
     }
 
     @Test

@@ -11,9 +11,18 @@ public class Blog {
     private String title;
     private String description;
     private String content;
+    private boolean atIndex;
     private Instant createdAt;
     private Instant updatedAt;
     private User user;
+
+    public boolean isAtIndex() {
+        return atIndex;
+    }
+
+    public void setAtIndex(boolean atIndex) {
+        this.atIndex = atIndex;
+    }
 
     public User getUser() {
         return user;
