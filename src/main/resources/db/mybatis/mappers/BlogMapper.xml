@@ -21,10 +21,14 @@
         LEFT OUTER JOIN user
         ON blog.user_id = user.id
         WHERE
-        <if test="user_id != null">
-            blog.user_id = #{user_id} and
-        </if>
-        blog.at_index=#{atIndex}
+        <choose>
+            <when test="user_id != null">
+                blog.user_id = #{user_id}
+            </when>
+            <otherwise>
+                blog.at_index=#{atIndex}
+            </otherwise>
+        </choose>
         ORDER BY blog_updated_at desc
         limit ${offset}, #{limit}
     </select>
@@ -53,8 +57,8 @@
 
     </select>
     <insert id="insertBlog" parameterType="hello.entity.Blog" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO blog (user_id, title, description, content,at_index, created_at, updated_at)
-        VALUES (#{userId}, #{title}, #{description}, #{content},#{atIndex}, now(), now())
+        INSERT INTO blog (user_id, title, description, content, at_index, created_at, updated_at)
+        VALUES (#{userId}, #{title}, #{description}, #{content}, #{atIndex}, now(), now())
     </insert>
     <delete id="deleteBlog" parameterType="int">
         DELETE
@@ -67,7 +71,7 @@
             content     = #{content},
             description = #{description},
             updated_at  = now(),
-            at_index = #{atIndex}
+            at_index    = #{atIndex}
         WHERE id = #{id}
     </update>
 
