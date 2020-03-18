@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 全局加密服务：所有的密码都要使用这个加密器进行加密，这样spring才能够根据提供的用户，正确的把用户加密并和存储的信息进行比对
     @Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+//        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
         auth.authenticationProvider(authenticationProvider());
         System.out.println("你惊扰了witch！！！");
     }
