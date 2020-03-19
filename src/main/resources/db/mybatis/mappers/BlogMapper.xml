@@ -29,7 +29,7 @@
                 blog.at_index=#{atIndex}
             </otherwise>
         </choose>
-        ORDER BY blog_updated_at desc
+        ORDER BY blog_created_at desc
         limit ${offset}, #{limit}
     </select>
     <select id="countBlogs" resultType="int">
