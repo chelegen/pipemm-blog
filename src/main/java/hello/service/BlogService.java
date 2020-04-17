@@ -2,7 +2,7 @@ package hello.service;
 
 import hello.dao.BlogDao;
 import hello.entity.*;
-import org.graalvm.compiler.core.common.SuppressFBWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
