@@ -1,8 +1,9 @@
 # 多人分享博客平台
 [![Build Status](https://www.travis-ci.org/chelegen/pipemm-blog.svg?branch=master)](https://www.travis-ci.org/chelegen/pipemm-blog)
+
 这是基于Spring Boot的多人博客平台的后端实现
 - 效果展示：[在线预览](http://139.196.161.65/)
-- 从零开始搭建博客需要的材料：[接口约定文档](https://github.com/chelegen/pipemm-blog/blob/master/%E5%89%8D%E5%90%8E%E7%AB%AF%E6%8E%A5%E5%8F%A3%E7%BA%A6%E5%AE%9A.md) + [前端页面代码](https://github.com/jirengu-inc/vue-blog-preview)
+- 从零开始搭建博客需要的材料：[前后端接口约定文档](https://github.com/chelegen/pipemm-blog/blob/master/%E5%89%8D%E5%90%8E%E7%AB%AF%E6%8E%A5%E5%8F%A3%E7%BA%A6%E5%AE%9A.md) + [前端页面代码](https://github.com/jirengu-inc/vue-blog-preview)
 
 ### 项目结构
 - Controller层：处理接收到的HTTP请求，对获取的请求参数进行验证清洗，并将参数传递给业务逻辑Service层。
