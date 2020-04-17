@@ -8,7 +8,6 @@ import hello.entity.User;
 import hello.service.AuthService;
 import hello.service.BlogService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,10 +81,10 @@ public class BlogController {
 
     private Blog fromParam(Map<String, Object> params, User user) {
         Blog blog = new Blog();
-        String title = (String)params.get("title");
-        String content = (String)params.get("content");
-        String description = (String)params.get("description");
-        boolean atIndex = (boolean)params.get("atIndex");
+        String title = (String) params.get("title");
+        String content = (String) params.get("content");
+        String description = (String) params.get("description");
+        boolean atIndex = (boolean) params.get("atIndex");
 
         AssertUtils.assertTrue(StringUtils.isNotBlank(title) && title.length() < 100, "标题错误");
         AssertUtils.assertTrue(StringUtils.isNotBlank(content) && content.length() < 1000, "内容错误");

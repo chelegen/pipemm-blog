@@ -75,6 +75,12 @@
         WHERE id = #{id}
     </update>
 
+    <select id="findUserByUsername" parameterType="string" resultType="hello.entity.User">
+        select *
+        from user
+        where username = #{username}
+    </select>
+
     <resultMap id="blog" type="hello.entity.Blog">
         <id property="id" column="blog_id"/>
         <result property="title" column="blog_title"/>

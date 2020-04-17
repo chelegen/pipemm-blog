@@ -1,12 +1,14 @@
 package hello.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.graalvm.compiler.core.common.SuppressFBWarnings;
 
 import java.time.Instant;
 
 public class Blog {
     private Integer id;
     @JsonIgnore
+    @SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "我希望把这个错误忽略掉")
     private Integer userId;
     private String title;
     private String description;

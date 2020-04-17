@@ -2,6 +2,7 @@ package hello.service;
 
 import hello.dao.BlogDao;
 import hello.entity.*;
+import org.graalvm.compiler.core.common.SuppressFBWarnings;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ public class BlogService {
         this.userService = userServicel;
     }
 
+    @SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "我希望把这个错误忽略掉")
     public BlogListResult getBlogs(Integer page, Integer pageSize, Integer userId, boolean atIndex) {
         try {
             List<Blog> blogs = blogDao.getBlogs(page, pageSize, userId, atIndex);

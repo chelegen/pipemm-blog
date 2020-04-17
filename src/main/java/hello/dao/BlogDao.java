@@ -26,12 +26,12 @@ public class BlogDao {
         return result;
     }
 
-    public List<Blog> getBlogs(Integer page, Integer pageSize, Integer userId,boolean atIndex) {
+    public List<Blog> getBlogs(Integer page, Integer pageSize, Integer userId, boolean atIndex) {
         Map<String, Object> parameters = asMap(
                 "user_id", userId,
                 "offset", (page - 1) * pageSize,
                 "limit", pageSize,
-                "atIndex",atIndex
+                "atIndex", atIndex
         );
         return sqlSession.selectList("selectBlog", parameters);
     }
