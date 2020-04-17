@@ -20,7 +20,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 
 @ExtendWith(SpringExtension.class)
@@ -32,7 +31,7 @@ public class UserRegisterTest {
 
     @BeforeAll
     public static void setUp() throws IOException {
-        File projectDir = new File(System.getProperty("basedir", System.getProperty("user.dir")));
+//        File projectDir = new File(System.getProperty("basedir", System.getProperty("user.dir")));
         ClassicConfiguration conf = new ClassicConfiguration();
         conf.setDataSource(
                 "jdbc:h2:mem:test",
