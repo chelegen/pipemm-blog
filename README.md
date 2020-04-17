@@ -39,7 +39,7 @@ git clone https://github.com/chelegen/pipemm-blog.git
 docker run --name mysql -v `pwd`/docker/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -d mysql:8.0.18
 ```
 数据库初始化
-- Flyway不支持自动初始化数据库 (命令行或调用函数使用)
+- Flyway不支持自动创建数据库 (初始化的前提，必须有这个数据库)
 ```
 mvn flyway:migrate
 ```
