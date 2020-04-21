@@ -34,9 +34,18 @@
     </select>
     <select id="countBlogs" resultType="int">
         select count(*) from blog
-        <if test="user_id != null">
-            where user_id = #{user_id};
-        </if>
+        <!--        <if test="user_id != null">-->
+        <!--            where user_id = #{user_id};-->
+        <!--        </if>-->
+        WHERE
+        <choose>
+            <when test="user_id != null">
+                user_id = #{user_id};
+            </when>
+            <otherwise>
+                at_index = 1;
+            </otherwise>
+        </choose>
     </select>
     <select id="getBlogById" resultMap="blog">
         SELECT blog.id          as blog_id,
