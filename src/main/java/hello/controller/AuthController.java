@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Map;
 
@@ -43,7 +45,9 @@ public class AuthController {
 
     @GetMapping("/auth/logout")
     @ResponseBody
-    public Result logout() {
+    public Result logout(HttpSession session, SessionStatus sessionStatus) {
+        session.invalidate();
+        sessionStatus.setComplete();
         return authService.getCurrentUser()
                 .map(user -> LoginResult.success("注销成功", false))
                 .orElse(LoginResult.success("用户没有登录", false));
