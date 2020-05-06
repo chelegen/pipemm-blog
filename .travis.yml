@@ -1,6 +1,10 @@
 language: java
 jdk:
   - openjdk8
+
+services:
+  - redis-server
+
 script: mvn verify
 before_install:
   - chmod +x mvnw
